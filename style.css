@@ -1,5 +1,10 @@
 html{
-    scroll-behavior: smooth;
+    scroll-behavior: none;
+}
+*,
+*::after,
+*::before{
+    box-sizing: border-box;
 }
 body{
     overflow-x: hidden;
@@ -16,7 +21,7 @@ body{
     overflow: hidden;
     background: #F8F3D9;
     z-index: 9999;
-    animation: opacity 3s 3s linear both;
+    animation: opacity 1.5s 1.5s linear both;
 }
 .splash::after{
     content: "WELCOME";
@@ -30,15 +35,6 @@ body{
     display: block;
     width: 100%;
     height: 100vh;
-    animation: splash_zoom 3s 3s ease-in-out both;
-}
-@keyframes splash_zoom{
-    from{
-        transform: scale(100%);
-    }
-    to{
-        transform: scale(300%);
-    }
 }
 .hide{
     display: none;
@@ -60,12 +56,12 @@ body{
 .container{
     display: grid;
     width: 100%;
-    height: auto;
+    height: 100%;
     margin: 0 auto;
     padding: 0;
-    background: blue;
+    background:#F8F3D9 ;
     grid-template-columns: repeat(6, auto-fill);
-    grid-template-rows: repeat(10, 200px);
+    grid-template-rows: repeat(12, 200px);
     grid-template-areas: 
     "hero hero hero hero hero hero"
     "hero hero hero hero hero hero"
@@ -76,24 +72,28 @@ body{
     ". featured featured featured featured ."
     ". featured featured featured featured ."
     ". featured featured featured featured ."
-    ". . . . . ."
-    ". . . . . ."
+    ". featured2 featured2 featured2 featured2 ."
+    ". featured2 featured2 featured2 featured2 ."
+    ". featured2 featured2 featured2 featured2 ."
+}
+@property --width{
+    syntax: "<length>";
+    initial-value: 100vw;
+    inherits: true;
 }
 .hero{
+    overflow: hidden;
     grid-area: hero;
+    width: var(--width);
     display: flex;
     background: #F8F3D9;
     justify-content: center;
     align-items: center;
 }
-.hero{
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
 .wrapper{
     display: flex;
     width: 100%;
+    height: 95%;
 }
 @keyframes bluranimation {
     0%{
@@ -116,6 +116,10 @@ body{
     rotate: 130deg;
     translate: 0% -10%;
     animation: pop_in_left 1.5s 6s ease-in-out both, bounce 3s 7.5s ease-in-out infinite;
+    
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 @keyframes pop_in_left {
     from{
@@ -128,11 +132,15 @@ body{
 .item_center{
     display: block;
     width: 60%;
-    height: 100%;
+    height: 100vh;
     text-wrap: wrap;
     align-content: center;
     position: relative;
     z-index: 1;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
 }
 .item_center p{
     font-size: 120px;
@@ -156,6 +164,7 @@ body{
     position: absolute;
     padding-bottom: 0px;
     margin-top: 40vh;
+    justify-content: center;
     background-image: url(img/hero_notebook.png);
     background-repeat: no-repeat;
     background-size: contain;
@@ -187,6 +196,10 @@ body{
     rotate: 70deg;
     translate: 10% 40%;
     animation: pop_in_right 1.5s 6s ease-in-out both, bounce 3s 1.5s ease-in-out infinite;
+
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 @keyframes pop_in_right {
     from{
@@ -245,31 +258,84 @@ body{
     text-shadow: 0px 0px 3px black;
 }
 .featured{
-    overflow: clip;
+    overflow: hidden;
     grid-area: featured;
     display: flex;
-    width: 100rem;
-    border-top: 5px solid;
+    width: 100vw;
+    padding: 20px;
+    border-top: 2px solid;
+    border-color: black;
+    background: #F8F3D9;
+}
+.featured2{
+    overflow: hidden;
+    grid-area: featured2;
+    display: flex;
+    width: 100vw;
+    padding: 20px;
+    border-top: 2px solid;
     border-color: black;
     background: #F8F3D9;
 }
 .card{
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 30% 70%;
+    position: relative;
+    background:#F8F3D9 ;
+    z-index: 3;
+    align-items: center;
+}
+.card .box{
+    overflow: hidden;
+    display: block;
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: transparent;
+    border-radius: 20px;
+    border-color: black;
+    border-style: solid;
+    box-shadow: 5px 5px 10px black;
+}
+.featured .card .box .box_img{
+    overflow: hidden;
     display: flex;
     width: 100%;
     height: 100%;
-    justify-content: center;
-    position: relative;
-    background: black;
-    margin: 10px 10px;
-    animation: slide both;
-    animation-timeline: view(95% 10%);
+    position: absolute;
+    background-image: url(img/hero_notebook.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-top: 300px;
     z-index: 1;
+    animation: bluranimation both;
+    animation-timeline: view(100% -20%);
 }
-@keyframes slide {
-    0%{
-        transform: translateX(-100vw);
-    }
-    100%{
-        transform: translateX(0vw);
-    }
+.featured2 .card .box .box_img2{
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    background-image: url(img/hero_notebook.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 1;
+    animation: bluranimation both;
+    animation-timeline: view(100% -20%);
+}
+.description{
+    height: 100%;
+    position: relative;
+    text-align: center;
+    align-content: center;
+    text-wrap: balance;
+    background: #79a091;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px black;
+    font-size: 50px;
 }
